@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private void qidong(){
         //这里用到了隐式意图，来启动APP里面的Activity
         Intent intent = new Intent();
-        intent.setAction("app.intent.action.DaKaCamera");
+        intent.setAction("app.intent.action.watermark.DaKaCamera");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.putExtra("DKCameraAction", "com.android.qidong.MainActivity");
         startActivityForResult(intent, 1000);
