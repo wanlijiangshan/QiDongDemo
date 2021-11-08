@@ -1,6 +1,7 @@
 package com.android.qidong;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +48,8 @@ public class PictureAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        Glide.with(mContext).load(mData.get(position).imagePath).into(myViewHolder.imageView);
+        Log.e("ceshi", "onBindViewHolder: mData.get(position).filePath == " + mData.get(position).filePath );
+        Glide.with(mContext).load(new File(mData.get(position).filePath)).into(myViewHolder.imageView);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

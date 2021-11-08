@@ -3,6 +3,18 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        maven { url 'https://repo1.maven.org/maven2/' }
+
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url 'https://jitpack.io' }
+        maven {url 'http://developer.huawei.com/repo/'}     // 华为 maven 仓库地址
+        maven { url "https://maven.admobile.top/repository/maven-releases/" }
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.2"
@@ -16,6 +28,18 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        maven { url 'https://repo1.maven.org/maven2/' }
+
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url 'https://jitpack.io' }
+        maven {url 'http://developer.huawei.com/repo/'}     // 华为 maven 仓库地址
+        maven { url "https://maven.admobile.top/repository/maven-releases/" }
+
     }
 }
 

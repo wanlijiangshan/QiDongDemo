@@ -2,6 +2,7 @@ package com.android.qidong;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,10 +12,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends FragmentActivity {
 
     private TextView textView;
     private RecyclerView recyclerView;
@@ -34,13 +42,25 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.activity_main_actionCameraBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionCamera(0);
+                PermissionUtil.checkWriteStoragePermission(MainActivity.this, new PermissionUtil.CallLisenter() {
+                    @Override
+                    public void onCall(boolean isAccept) {
+                        if (isAccept)
+                            actionCamera(0);
+                    }
+                });
             }
         });
         findViewById(R.id.activity_main_actionAlbumBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionCamera(1);
+                PermissionUtil.checkWriteStoragePermission(MainActivity.this, new PermissionUtil.CallLisenter() {
+                    @Override
+                    public void onCall(boolean isAccept) {
+                        if (isAccept)
+                            actionCamera(1);
+                    }
+                });
             }
         });
     }
@@ -49,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         //这里用到了隐式意图，来启动APP里面的Activity
         Intent intent = new Intent();
         intent.setAction("DaKaCamera.intent.action.GET_WATERMARK");
+//        intent.setAction("app.intent.action.watermark.DaKaCamera");
         intent.putExtra("DKCameraParame", getDKCameraParame());
         intent.putExtra("DKCameraType", DKCameraType);//0相机 1 相册
         startActivityForResult(intent, 1000);
@@ -70,12 +91,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (RESULT_OK == resultCode && requestCode == 1000){
-            String dakaImgs = data.getStringExtra("dakaImgs");
-            textView.setText(dakaImgs);
-            Log.e("ceshi", "onActivityResult: dakaImgs == " + dakaImgs + ", " +  resultCode);
+            String dakaPictures = data.getStringExtra("dakaPictures");
+            //textView.setText(dakaPictures);
+            Gson gson=new Gson();
+            Type type = new TypeToken<ArrayList<PictureBean>>(){}.getType();
+            List<PictureBean> list = gson.fromJson(dakaPictures, type);
+            pictureAdapter.setData(list);
         }
-
     }
 }
