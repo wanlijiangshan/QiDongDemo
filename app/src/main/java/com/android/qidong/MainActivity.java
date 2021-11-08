@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textView;
     private RecyclerView recyclerView;
     private PictureAdapter pictureAdapter;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = findViewById(R.id.activity_main_getDataText);
         recyclerView = findViewById(R.id.activity_main_recyclerVeiw);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -46,14 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private void actionCamera(int DKCameraType){
         //这里用到了隐式意图，来启动APP里面的Activity
         Intent intent = new Intent();
-        intent.setAction("app.intent.action.watermark.DaKaCamera");
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.putExtra("DKCameraAction", "com.android.qidong.MainActivity");//包名路径+activity名
+        intent.setAction("DaKaCamera.intent.action.GET_WATERMARK");
         intent.putExtra("DKCameraParame", getDKCameraParame());
         intent.putExtra("DKCameraType", DKCameraType);//0相机 1 相册
         startActivityForResult(intent, 1000);
-
-        Log.e("ceshi", "actionCamera: getDKCameraParame() == " + getDKCameraParame() );
     }
 
     private String getDKCameraParame(){
@@ -72,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("ceshi", "onActivityResult: requestCode == " + requestCode + ", " +  resultCode);
+
         if (RESULT_OK == resultCode && requestCode == 1000){
             String dakaImgs = data.getStringExtra("dakaImgs");
+            textView.setText(dakaImgs);
+            Log.e("ceshi", "onActivityResult: dakaImgs == " + dakaImgs + ", " +  resultCode);
         }
 
     }
