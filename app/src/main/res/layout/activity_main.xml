@@ -13,15 +13,38 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        ></TextView>
+        android:textSize="20sp"></TextView>
 
-
-    <Button
-        android:id="@+id/activity_main_qidongBtn"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_centerInParent="true"
-        android:text="启动"
-        android:textSize="20sp"></Button>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/activity_main_actionCameraBtn"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:text="启动相机"
+                android:textSize="20sp"></Button>
+
+            <Button
+                android:id="@+id/activity_main_actionAlbumBtn"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:text="启动相册"
+                android:textSize="20sp"></Button>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_main_recyclerVeiw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </RelativeLayout>
