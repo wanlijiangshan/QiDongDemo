@@ -48,16 +48,20 @@ public class PictureAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        Log.e("ceshi", "onBindViewHolder: mData.get(position).filePath == " + mData.get(position).filePath );
         Glide.with(mContext).load(new File(mData.get(position).filePath)).into(myViewHolder.imageView);
+        if (mData.get(position).type == 0)
+            myViewHolder.playImg.setVisibility(View.GONE);
+        else
+            myViewHolder.playImg.setVisibility(View.VISIBLE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
+        private ImageView imageView, playImg;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_picture_imageView);
+            playImg = itemView.findViewById(R.id.item_album_videoPlay);
         }
     }
 

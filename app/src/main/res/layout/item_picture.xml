@@ -15,4 +15,16 @@
         android:visibility="visible"
         ></com.android.qidong.MyImageView>
 
+    <ImageView
+        android:id="@+id/item_album_videoPlay"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerInParent="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_videoplay" />
+
+
 </RelativeLayout>
