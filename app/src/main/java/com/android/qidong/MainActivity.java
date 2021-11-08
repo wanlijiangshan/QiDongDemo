@@ -66,7 +66,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void actionCamera(int DKCameraType){
-        //这里用到了隐式意图，来启动APP里面的Activity
         Intent intent = new Intent();
         intent.setAction("DaKaCamera.intent.action.GET_WATERMARK");
 //        intent.setAction("app.intent.action.watermark.DaKaCamera");
