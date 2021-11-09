@@ -1,7 +1,7 @@
 package com.android.qidong;
 
 public class PictureBean {
-    public String location;
+    public String location;//地址
     public String longitude;//经度
     public String latitude;//纬度
     public String address;//拍照是定位地址

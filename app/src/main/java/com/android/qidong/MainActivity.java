@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,9 +27,11 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
 
+    private RelativeLayout configRel;
     private TextView textView;
     private RecyclerView recyclerView;
     private PictureAdapter pictureAdapter;
+    private EditText waterMarkIdEdit, addressEdit, remarkEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,16 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.activity_main_getDataText);
         recyclerView = findViewById(R.id.activity_main_recyclerVeiw);
+        waterMarkIdEdit = findViewById(R.id.activity_main_waterMarkIdEdit);
+        addressEdit = findViewById(R.id.activity_main_addressEdit);
+        remarkEdit = findViewById(R.id.activity_main_remarkEdit);
+        configRel = findViewById(R.id.activity_main_configRel);
+        configRel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configRel.setVisibility(View.GONE);
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         pictureAdapter = new PictureAdapter(this);
@@ -63,9 +78,21 @@ public class MainActivity extends FragmentActivity {
                 });
             }
         });
+        findViewById(R.id.activity_main_actionConfigBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PermissionUtil.checkWriteStoragePermission(MainActivity.this, new PermissionUtil.CallLisenter() {
+                    @Override
+                    public void onCall(boolean isAccept) {
+                        if (isAccept)
+                            actionCamera(1);
+                    }
+                });
+            }
+        });
     }
 
-    private void actionCamera(int DKCameraType){
+    private void actionCamera(int DKCameraType) {
         Intent intent = new Intent();
         intent.setAction("DaKaCamera.intent.action.GET_WATERMARK");
         //intent.putExtra("backAction", "com.android.qidong.MainActivity");//包名+activity名
@@ -74,12 +101,12 @@ public class MainActivity extends FragmentActivity {
         startActivityForResult(intent, 1000);
     }
 
-    private String getDKCameraParame(){
+    private String getDKCameraParame() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("studioId", "studioId");
-            jsonObject.put("address", "北京市海淀区五道口");
-            jsonObject.put("remark", "备注内容");
+            jsonObject.put("watermarkId", waterMarkIdEdit.getText().toString());//6189ff78e733f156e4421a33
+            jsonObject.put("address", addressEdit.getText().toString());
+            jsonObject.put("remark", remarkEdit.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,13 +117,25 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (RESULT_OK == resultCode && requestCode == 1000){
+        if (RESULT_OK == resultCode && requestCode == 1000) {
             String dakaPictures = data.getStringExtra("dakaPictures");
             textView.setText(dakaPictures);
-            Gson gson=new Gson();
-            Type type = new TypeToken<ArrayList<PictureBean>>(){}.getType();
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<PictureBean>>() {
+            }.getType();
             List<PictureBean> list = gson.fromJson(dakaPictures, type);
             pictureAdapter.setData(list);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (configRel.getVisibility() == View.VISIBLE) {
+                configRel.setVisibility(View.GONE);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
