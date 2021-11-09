@@ -89,7 +89,6 @@ public class MainActivity extends FragmentActivity {
     private void actionCamera(int DKCameraType) {
         Intent intent = new Intent();
         intent.setAction("DaKaCamera.intent.action.GET_WATERMARK");
-        //intent.putExtra("backAction", "com.android.qidong.MainActivity");//包名+activity名
         intent.putExtra("DKCameraParame", getDKCameraParame());
         intent.putExtra("DKCameraType", DKCameraType);//0相机 1 相册
         startActivityForResult(intent, 1000);
