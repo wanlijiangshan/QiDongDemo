@@ -81,13 +81,7 @@ public class MainActivity extends FragmentActivity {
         findViewById(R.id.activity_main_actionConfigBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PermissionUtil.checkWriteStoragePermission(MainActivity.this, new PermissionUtil.CallLisenter() {
-                    @Override
-                    public void onCall(boolean isAccept) {
-                        if (isAccept)
-                            actionCamera(1);
-                    }
-                });
+                configRel.setVisibility(View.VISIBLE);
             }
         });
     }
