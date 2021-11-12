@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -18,12 +20,13 @@ public class PictureAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     public List<PictureBean> mData;
+    private int type;//0带水印照片，1原始照片
 
-    public PictureAdapter(Context Context) {
+    public PictureAdapter(Context Context, int type) {
         this.mContext = Context;
+        this.type = type;
         this.mData = new ArrayList<>();
     }
-
 
     public void setData(List<PictureBean> data) {
         this.mData.clear();
@@ -48,7 +51,12 @@ public class PictureAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
-        Glide.with(mContext).load(new File(mData.get(position).filePath)).into(myViewHolder.imageView);
+        if (type == 0)
+            Glide.with(mContext).load(new File(mData.get(position).filePath)).into(myViewHolder.imageView);
+        else if (type == 1) {
+            if (mData.get(position).originFilePath != null)
+                Glide.with(mContext).load(new File(mData.get(position).originFilePath)).into(myViewHolder.imageView);
+        }
         if (mData.get(position).type == 0)
             myViewHolder.playImg.setVisibility(View.GONE);
         else

@@ -29,8 +29,8 @@ public class MainActivity extends FragmentActivity {
 
     private RelativeLayout configRel;
     private TextView textView;
-    private RecyclerView recyclerView;
-    private PictureAdapter pictureAdapter;
+    private RecyclerView recyclerView, originrRecyclerView;
+    private PictureAdapter pictureAdapter, originPictureAdapter;
     private EditText waterMarkIdEdit, addressEdit, remarkEdit;
 
     @Override
@@ -39,6 +39,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.activity_main_getDataText);
         recyclerView = findViewById(R.id.activity_main_recyclerVeiw);
+        originrRecyclerView = findViewById(R.id.activity_main_originrRecyclerView);
         waterMarkIdEdit = findViewById(R.id.activity_main_waterMarkIdEdit);
         addressEdit = findViewById(R.id.activity_main_addressEdit);
         remarkEdit = findViewById(R.id.activity_main_remarkEdit);
@@ -51,8 +52,13 @@ public class MainActivity extends FragmentActivity {
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        pictureAdapter = new PictureAdapter(this);
+        pictureAdapter = new PictureAdapter(this, 0);
         recyclerView.setAdapter(pictureAdapter);
+
+        GridLayoutManager originGridLayoutManager = new GridLayoutManager(this, 3);
+        originrRecyclerView.setLayoutManager(originGridLayoutManager);
+        originPictureAdapter = new PictureAdapter(this, 1);
+        originrRecyclerView.setAdapter(originPictureAdapter);
 
         findViewById(R.id.activity_main_actionCameraBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +106,7 @@ public class MainActivity extends FragmentActivity {
             jsonObject.put("watermarkId", waterMarkIdEdit.getText().toString());//6189ff78e733f156e4421a33
             jsonObject.put("address", addressEdit.getText().toString());
             jsonObject.put("remark", remarkEdit.getText().toString());
+            jsonObject.put("pictureWidth", 700);//如果不传此参数默认为原始宽度。
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -118,6 +125,7 @@ public class MainActivity extends FragmentActivity {
             }.getType();
             List<PictureBean> list = gson.fromJson(dakaPictures, type);
             pictureAdapter.setData(list);
+            originPictureAdapter.setData(list);
         }
     }
 

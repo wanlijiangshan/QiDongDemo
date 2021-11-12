@@ -53,10 +53,32 @@
                     android:textSize="20sp"></Button>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="带水印照片"
+                android:textColor="#000000"
+                android:textSize="18sp"></TextView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_main_recyclerVeiw"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="原始照片"
+                android:textColor="#000000"
+                android:textSize="18sp"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_main_originrRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -65,9 +87,9 @@
         android:id="@+id/activity_main_configRel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
